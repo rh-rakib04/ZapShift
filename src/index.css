@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Sora:wght@100..800&family=Urbanist:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+* {
+  font-family: "Urbanist", sans-serif;
+}
+/* DaisyUI plugin */
+@plugin "daisyui";
+
+/* LIGHT THEME */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-primary: #03373d;
+  --color-primary-content: #ffffff;
+
+  --color-secondary: #94c6cb;
+  --color-secondary-content: #03373d;
+
+  --color-accent: #caeb66;
+  --color-accent-content: #1f1f1f;
+
+  --color-neutral: #dadada;
+  --color-neutral-content: #1f1f1f;
+
+  --color-base-100: #ffffff;
+  --color-base-content: #1f1f1f;
+}
+
+/* DARK THEME */
+@plugin "daisyui/theme" {
+  name: "dark";
+
+  --color-primary: #caeb66;
+  --color-primary-content: #1f1f1f;
+
+  --color-secondary: #056873;
+  --color-secondary-content: #ffffff;
+
+  --color-accent: #acc857;
+  --color-accent-content: #1f1f1f;
+
+  --color-neutral: #282828;
+  --color-neutral-content: #ffffff;
+
+  --color-base-100: #1f1f1f;
+  --color-base-content: #ffffff;
+}
+a {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200;
+  @apply text-base-content hover:bg-base-200;
+}
+a.active {
+  @apply bg-primary text-primary-content shadow-sm;
+}
