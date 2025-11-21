@@ -6,7 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 const Banner = () => {
   return (
-    <div className="mx-auto  w-11/12">
+    <div className="mx-auto my-20 w-11/12">
       <Carousel infiniteLoop={true} autoPlay={true} interval={3000}>
         <div>
           <img className="mx-auto" src={Img1} />

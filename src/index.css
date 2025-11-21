@@ -53,3 +53,21 @@ a {
 a.active {
   @apply bg-primary text-primary-content shadow-sm;
 }
+
+/* Fade and scale for non-active slides */
+.swiper-slide {
+  transition: 0.35s ease-in-out;
+}
+
+.swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #999;
+  opacity: 0.4;
+  transition: 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000;
+  opacity: 1;
+}

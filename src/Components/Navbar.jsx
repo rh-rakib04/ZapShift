@@ -31,7 +31,7 @@ const Navbar = () => {
   // --------------------------------------------------
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100  fixed top-0 w-full z-50 shadow">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="lg:hidden">
@@ -82,9 +82,11 @@ const Navbar = () => {
         </button>
 
         <Link className="btn bg-secondary">Sign in</Link>
-        <div className="flex items-center">
-          <Link className="btn bg-[#CAEB66] rounded-2xl ">Be a Rider</Link>
-          <div className="font-bold p-2 text-2xl rounded-full hidden md:flex bg-[#056873]">
+        <div className="flex items-center hidden md:flex">
+          <Link to="/be-a-rider" className="btn bg-[#CAEB66] rounded-2xl ">
+            Be a Rider
+          </Link>
+          <div className="font-bold p-2 text-2xl rounded-full  bg-[#056873]">
             <FiArrowUpRight />
           </div>
         </div>
