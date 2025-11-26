@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
 import { FaMoon, FaSun } from "react-icons/fa6";
 import { FiArrowUpRight } from "react-icons/fi";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const links = (
@@ -13,7 +14,14 @@ const Navbar = () => {
       <NavLink to="/be-a-rider">Be a Rider</NavLink>
     </>
   );
-
+  const { user, logOut } = useAuth();
+  const handleSignOut = () => {
+    logOut()
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   // --------------------------------------------------
   // THEME SYSTEM (Persistent + Sync with DaisyUI)
   // --------------------------------------------------
@@ -81,7 +89,15 @@ const Navbar = () => {
           {theme === "light" ? <FaMoon /> : <FaSun />}
         </button>
 
-        <Link className="btn bg-secondary">Sign in</Link>
+        {user ? (
+          <Link onClick={handleSignOut} className="btn bg-secondary">
+            Log Out
+          </Link>
+        ) : (
+          <Link to="/login" className="btn bg-secondary">
+            Sign in
+          </Link>
+        )}
         <div className="flex items-center hidden md:flex">
           <Link to="/be-a-rider" className="btn bg-[#CAEB66] rounded-2xl ">
             Be a Rider
