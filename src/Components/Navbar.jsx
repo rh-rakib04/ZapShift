@@ -5,6 +5,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOut } = useAuth();
   const links = (
     <>
       <NavLink to="/">Services</NavLink>
@@ -13,9 +14,15 @@ const Navbar = () => {
       <NavLink to="/pricing">Pricing</NavLink>
       <NavLink to="/send-parcel">Send Parcel</NavLink>
       <NavLink to="/be-a-rider">Be a Rider</NavLink>
+
+      {user && (
+        <>
+          <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
+        </>
+      )}
     </>
   );
-  const { user, logOut } = useAuth();
+
   const handleSignOut = () => {
     logOut()
       .then()

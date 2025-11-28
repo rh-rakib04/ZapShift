@@ -1,15 +1,19 @@
 import React from "react";
 import { set, useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
 
 const SendParcel = () => {
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    // formState: { errors },
   } = useForm();
-
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const serviceCenters = useLoaderData();
   const regionsAll = serviceCenters.map((c) => c.region);
   const regions = [...new Set(regionsAll)];
@@ -43,6 +47,28 @@ const SendParcel = () => {
       }
     }
     console.log("parcel Cost", cost);
+    data.cost = cost;
+    Swal.fire({
+      title: "Agree with the cost?",
+      text: `You have to pay ${cost}!`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, pay it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.post("/parcels", data).then((res) => {
+          console.log("after saving parcel", res.data);
+        });
+
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success",
+        // });
+      }
+    });
   };
   return (
     <div className="min-h-screen bg-base-100 p-6">
@@ -97,6 +123,7 @@ const SendParcel = () => {
                 <input
                   type="text"
                   {...register("senderName")}
+                  defaultValue={user?.displayName}
                   placeholder="Sender Name"
                   className="input input-bordered"
                 />
@@ -104,6 +131,13 @@ const SendParcel = () => {
                   type="text"
                   {...register("senderAddress")}
                   placeholder="Address"
+                  className="input input-bordered"
+                />
+                <input
+                  type="email"
+                  {...register("senderEmail")}
+                  placeholder="Email"
+                  defaultValue={user?.email}
                   className="input input-bordered"
                 />
                 <input
@@ -135,8 +169,10 @@ const SendParcel = () => {
                   ))}
                 </select>
 
-                <textarea {...register("pickupInstruction")} className="textarea textarea-bordered"></textarea>
-
+                <textarea
+                  {...register("pickupInstruction")}
+                  className="textarea textarea-bordered"
+                ></textarea>
               </div>
             </div>
 
@@ -154,6 +190,12 @@ const SendParcel = () => {
                   type="text"
                   {...register("receiverAddress")}
                   placeholder="Receiver Address"
+                  className="input input-bordered"
+                />
+                <input
+                  type="email"
+                  {...register("receiverEmail")}
+                  placeholder="Receiver Email"
                   className="input input-bordered"
                 />
                 <input
