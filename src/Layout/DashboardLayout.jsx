@@ -1,5 +1,6 @@
+import { Package } from "lucide-react";
 import React from "react";
-import { Link, Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
   return (
@@ -46,7 +47,8 @@ const DashboardLayout = () => {
           <ul className="menu w-full grow">
             {/* List item */}
             <li>
-              <Link to='/'
+              <NavLink
+                to="/"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
@@ -65,7 +67,18 @@ const DashboardLayout = () => {
                   <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 </svg>
                 <span className="is-drawer-close:hidden">Homepage</span>
-              </Link>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/my-parcels"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="MyParcel"
+              >
+                {/* Home icon */}
+                <Package className="w-4 h-4" />
+                <span className="is-drawer-close:hidden">My Parcels</span>
+              </NavLink>
             </li>
 
             {/* List item */}

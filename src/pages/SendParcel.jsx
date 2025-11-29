@@ -1,6 +1,6 @@
 import React from "react";
 import { set, useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
@@ -12,6 +12,7 @@ const SendParcel = () => {
     control,
     // formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const serviceCenters = useLoaderData();
@@ -33,12 +34,12 @@ const SendParcel = () => {
 
     let cost = 0;
     if (isDocument) {
-      cost = isSameDistrict ? 60 : 80;
+      cost = isSameDistrict ? 80 : 100;
     } else {
       if (parcelWeight < 3) {
-        cost = isSameDistrict ? 110 : 150;
+        cost = isSameDistrict ? 130 : 170;
       } else {
-        const minCharge = isSameDistrict ? 110 : 150;
+        const minCharge = isSameDistrict ? 130 : 170;
         const extraWeight = parcelWeight - 3;
         const extraCharge = isSameDistrict
           ? extraWeight * 40
@@ -60,13 +61,15 @@ const SendParcel = () => {
       if (result.isConfirmed) {
         axiosSecure.post("/parcels", data).then((res) => {
           console.log("after saving parcel", res.data);
+          if (res.data.insertedId) {
+            navigate("/dashboard/my-parcels");
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
         });
-
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success",
-        // });
       }
     });
   };

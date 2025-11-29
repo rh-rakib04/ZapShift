@@ -6,6 +6,7 @@ import { ImEye } from "react-icons/im";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -20,8 +21,7 @@ const MyParcels = () => {
   });
 
   const handleDelete = (id) => {
-    // console.log(id);
-
+    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -59,7 +59,7 @@ const MyParcels = () => {
               <th>Date</th>
               <th>Weight</th>
               <th>Price</th>
-              <th>Status</th>
+              <th>Payment Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -71,7 +71,13 @@ const MyParcels = () => {
                 <td>{parcel.createdAt}</td>
                 <td>{parcel.parcelWeight}</td>
                 <td>{parcel.cost}Tk</td>
-                <td>Pending</td>
+                <td>
+                  {parcel.paymentStatus === "paid" ? (
+                    <span className="text-green-400">Paid</span>
+                  ) : (
+                    <Link to={`/dashboard/payment/${parcel._id}`} className="btn-secondary btn ">Pay</Link>
+                  )}
+                </td>
                 <td>
                   <button className="btn btn-square">
                     <ImEye />
