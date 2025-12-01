@@ -5,11 +5,13 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Register = () => {
   const { registerUser, signInGoogle, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   // form hook
   const {
     register,
@@ -19,27 +21,48 @@ const Register = () => {
 
   // form function
   const handelSignIn = (data) => {
-    console.log("Register", data);
     const profileImg = data.photo[0];
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result);
+      .then(() => {
         const formData = new FormData();
         formData.append("image", profileImg);
         const Img_Api_Url = `https://api.imgbb.com/1/upload?expiration=600&key=${
           import.meta.env.VITE_img_api_key
         }`;
         axios.post(Img_Api_Url, formData).then((res) => {
-          console.log("after img bb", res.data.data.url);
-          //
+          const photoURL = res.data.data.url;
+
+          //create user in mongodb
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("User created in database");
+            }
+          });
+
+          //update user profile
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(userProfile)
-            .then(() => {
-              console.log("Update user profile ");
-              navigate(location?.state || "/");
+            .then((result) => {
+              //create user in mongodb
+              const userInfo = {
+                email: result.user.email,
+                displayName: result.user.displayName,
+                photoURL: result.user.photoURL,
+              };
+              axiosSecure.post("/users", userInfo).then((res) => {
+                if (res.data.insertedId) {
+                  console.log("User created in database");
+                }
+                navigate(location?.state || "/");
+              });
             })
             .catch((error) => {
               console.log(error);

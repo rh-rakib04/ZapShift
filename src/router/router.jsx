@@ -13,9 +13,11 @@ import PrivateRoute from "./PrivateRoute";
 import SendParcel from "../pages/SendParcel";
 import DashboardLayout from "../Layout/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels";
-import Payment from "../pages/Dashboard/Payment";
-import PaymentSuccess from "../pages/Dashboard/PaymentSuccess";
-import PaymentCancel from "../pages/Dashboard/PaymentCancel";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
+import PaymentCancel from "../pages/Dashboard/Payment/PaymentCancel";
+import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
+import RiderApproval from "../pages/Dashboard/RiderApproval";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +57,7 @@ const router = createBrowserRouter([
             <BeRider />
           </PrivateRoute>
         ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
     ],
   },
@@ -89,6 +92,14 @@ const router = createBrowserRouter([
         element: <MyParcels />,
       },
       {
+        path: "rider-approval",
+        element: <RiderApproval />,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory />,
+      },
+      {
         path: "payment/:parcelId",
         element: <Payment />,
       },
@@ -98,7 +109,7 @@ const router = createBrowserRouter([
       },
       {
         path: "payment-cancelled",
-        element: <PaymentCancel/>,
+        element: <PaymentCancel />,
       },
     ],
   },

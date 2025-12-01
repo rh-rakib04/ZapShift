@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CheckCircle } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();

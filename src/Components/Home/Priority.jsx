@@ -11,7 +11,7 @@ const Priority = () => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "top",
       }}
-      className="flex flex-col-reverse md:flex-row bg-[#03373D] p-10 md:p-30 rounded-4xl text-white gap-5 my-10"
+      className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row bg-[#03373D] p-10 md:p-30 rounded-4xl text-white gap-5 my-10"
     >
       <div>
         <h1 className="text-3xl md:text-5xl font-extrabold ">

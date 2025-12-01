@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const Login = () => {
   const { signIn, signInGoogle } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   // form hook
   const {
     register,
@@ -30,8 +32,18 @@ const Login = () => {
   const handelGoogleSignIn = () => {
     signInGoogle()
       .then((result) => {
-        console.log(result);
-        navigate(location?.state || "/");
+        //create user in mongodb
+        const userInfo = {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            console.log("User created in database");
+          }
+          navigate(location?.state || "/");
+        });
       })
       .catch((error) => {
         console.log(error);

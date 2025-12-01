@@ -28,7 +28,7 @@ export default function ReviewSwiper({ reviewPromise }) {
   }
 
   return (
-    <section className="py-24 bg-transparent">
+    <section className="max-w-7xl mx-auto py-24 bg-transparent">
       <div className="max-w-4xl mx-auto text-center mb-10">
         <img src={img} className="mx-auto my-5" alt="" />
         <h2 className="text-3xl md:text-4xl text-primary text-center font-extrabold my-5">

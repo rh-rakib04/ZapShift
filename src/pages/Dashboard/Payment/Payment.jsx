@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link, useParams } from "react-router";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Payment = () => {
   const { parcelId } = useParams();
@@ -30,7 +30,7 @@ const Payment = () => {
   };
 
   return (
-    <div>
+    <div className="p-5">
       <h1>
         For this {parcel.parcelName} you need to pay {parcel.cost}
       </h1>

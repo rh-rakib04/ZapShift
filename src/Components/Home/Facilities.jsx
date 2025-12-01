@@ -4,7 +4,7 @@ import img2 from "../../assets/safe-delivery.png";
 import img3 from "../../assets/safe-delivery.png";
 const Facilities = () => {
   return (
-    <div className="w-11/12 mx-auto flex flex-col gap-5 border-y-2 border-secondary border-dotted py-20">
+    <div className="max-w-7xl mx-auto flex flex-col gap-5 border-y-2 border-secondary border-dotted py-20">
       <div className="flex flex-col md:flex-row text-secondary  bg-[#EAECED] gap-10 p-8 rounded-2xl">
         <img
           className="w-[150px] h-[160px ] mx-auto md:w-[200px] md:h-[220px]"

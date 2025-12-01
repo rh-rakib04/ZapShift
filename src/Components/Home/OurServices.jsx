@@ -9,7 +9,7 @@ import {
 
 const OurServices = () => {
   return (
-    <div className="text-center  py-15 my-10 bg-[#03373D]">
+    <div className="max-w-7xl rounded-2xl mx-auto text-center  py-15 my-10 bg-[#03373D]">
       <h1 className="text-3xl text-white md:text-4xl font-bold my-5">
         Our Services
       </h1>

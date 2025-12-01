@@ -21,7 +21,6 @@ const MyParcels = () => {
   });
 
   const handleDelete = (id) => {
-    
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -46,8 +45,9 @@ const MyParcels = () => {
       }
     });
   };
+
   return (
-    <div>
+    <div className="p-5">
       <h1>My Parcels {parcels.length}</h1>
       <div className="overflow-x-auto">
         <table className="table table-zebra">
@@ -75,7 +75,12 @@ const MyParcels = () => {
                   {parcel.paymentStatus === "paid" ? (
                     <span className="text-green-400">Paid</span>
                   ) : (
-                    <Link to={`/dashboard/payment/${parcel._id}`} className="btn-secondary btn ">Pay</Link>
+                    <Link
+                      to={`/dashboard/payment/${parcel._id}`}
+                      className="btn-secondary btn "
+                    >
+                      Pay
+                    </Link>
                   )}
                 </td>
                 <td>
