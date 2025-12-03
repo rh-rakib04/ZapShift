@@ -95,7 +95,7 @@ const BeRider = () => {
                   className="select select-bordered w-full"
                   required
                 >
-                  <option>Select your District</option>
+                  <option>Select your Region</option>
                   {regions.map((r, i) => (
                     <option key={i} value={r}>
                       {r}

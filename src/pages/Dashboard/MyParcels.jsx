@@ -57,6 +57,8 @@ const MyParcels = () => {
               <th>No.</th>
               <th>Parcel Name</th>
               <th>Date</th>
+              <th>Delivery Status</th>
+              <th>Tracking ID</th>
               <th>Weight</th>
               <th>Price</th>
               <th>Payment Status</th>
@@ -69,6 +71,8 @@ const MyParcels = () => {
                 <th>{index + 1}</th>
                 <td>{parcel.parcelName}</td>
                 <td>{parcel.createdAt}</td>
+                <td>{parcel.deliveryStatus}</td>
+                <td>{parcel.trackingId}</td>
                 <td>{parcel.parcelWeight}</td>
                 <td>{parcel.cost}Tk</td>
                 <td>

@@ -1,35 +1,42 @@
 import { Package } from "lucide-react";
-import { FaBiking, FaHistory } from "react-icons/fa";
+import { FaBiking, FaHistory, FaUsers } from "react-icons/fa";
+import { MdBikeScooter } from "react-icons/md";
 import React from "react";
 import { NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
+import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
+  const { role } = useRole();
   return (
     <div>
       {/* TOP NAVBAR */}
-<div className="navbar bg-base-100/70 backdrop-blur-md shadow-sm px-4 sticky top-0 z-50 rounded-b-xl">
-  {/* LEFT — LOGO */}
-  <div className="flex items-center gap-2">
-    <img src="/logo.png" alt="logo" className="w-10 h-10 object-contain" />
-    <span className="font-bold text-xl md:text-2xl">ZapShift</span>
-  </div>
+      <div className="navbar bg-base-100/70 backdrop-blur-md shadow-sm px-4 sticky top-0 z-50 rounded-b-xl">
+        {/* LEFT — LOGO */}
+        <div className="flex items-center gap-2">
+          <img
+            src="/logo.png"
+            alt="logo"
+            className="w-10 h-10 object-contain"
+          />
+          <span className="font-bold text-xl md:text-2xl">ZapShift</span>
+        </div>
 
-  {/* RIGHT — USER PROFILE */}
-  <div className="ml-auto flex items-center gap-3">
-    <div className="text-right hidden sm:block leading-tight">
-      <p className="font-semibold">{user?.name}</p>
-      <p className="text-xs opacity-60">{user?.role}</p>
-    </div>
+        {/* RIGHT — USER PROFILE */}
+        <div className="ml-auto flex items-center gap-3">
+          <div className="text-right hidden sm:block leading-tight">
+            <p className="font-semibold">{user?.name}</p>
+            <p className="text-xs opacity-60">{user?.role}</p>
+          </div>
 
-    <div className="avatar">
-      <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-        <img src={user?.photoURL} alt={user?.name} />
+          <div className="avatar">
+            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={user?.photoURL} alt={user?.name} />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
@@ -124,18 +131,53 @@ const DashboardLayout = () => {
                   </span>
                 </NavLink>
               </li>
-              {/* RiderApproval */}
-              <li>
-                <NavLink
-                  to="/dashboard/rider-approval"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Rider Approval"
-                >
-                  {/* Home icon */}
-                  <FaBiking className="w-4 h-4" />
-                  <span className="is-drawer-close:hidden">Rider Approval</span>
-                </NavLink>
-              </li>
+              {role === "admin" && (
+                <>
+                  {/* RiderApproval */}
+                  <li>
+                    <NavLink
+                      to="/dashboard/rider-approval"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Rider Approval"
+                    >
+                      {/* Home icon */}
+                      <FaBiking className="w-4 h-4" />
+                      <span className="is-drawer-close:hidden">
+                        Rider Approval
+                      </span>
+                    </NavLink>
+                  </li>
+                  {/* AssignRiders */}
+                  <li>
+                    <NavLink
+                      to="/dashboard/assign-riders"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assign Riders"
+                    >
+                      {/* Home icon */}
+                      <MdBikeScooter className="w-4 h-4" />
+
+                      <span className="is-drawer-close:hidden">
+                        Assign Riders
+                      </span>
+                    </NavLink>
+                  </li>
+                  {/* UserManagement */}
+                  <li>
+                    <NavLink
+                      to="/dashboard/user-management"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="User Management"
+                    >
+                      {/* Home icon */}
+                      <FaUsers className="w-4 h-4" />
+                      <span className="is-drawer-close:hidden">
+                        User Management
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

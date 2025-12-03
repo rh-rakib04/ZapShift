@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { Link, useParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Loading from "../../../Components/Loading";
 
 const Payment = () => {
   const { parcelId } = useParams();
@@ -14,7 +15,7 @@ const Payment = () => {
     },
   });
   if (isLoading) {
-    return <span className="loading loading-spinner text-error"></span>;
+    return <Loading />;
   }
 
   const handelPayment = async () => {

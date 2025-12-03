@@ -67,7 +67,8 @@ const RiderApproval = () => {
                 <th>Rider Age</th>
                 <th>Rider District</th>
                 <th>Rider NID</th>
-                <th>Status</th>
+                <th>Application Status</th>
+                <th>Work Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -89,6 +90,7 @@ const RiderApproval = () => {
                       <span className="text-red-500 font-bold">Rejected</span>
                     )}
                   </td>
+                  <td>{rider.workStatus || "N/A"}</td>
                   <td>
                     <button
                       onClick={() => handleApprove(rider)}
@@ -109,6 +111,7 @@ const RiderApproval = () => {
           </table>
         </div>
       </div>
+      
     </div>
   );
 };
