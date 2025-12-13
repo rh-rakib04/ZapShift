@@ -1,8 +1,8 @@
-import { Package } from "lucide-react";
-import { FaBiking, FaHistory, FaUsers } from "react-icons/fa";
-import { MdBikeScooter } from "react-icons/md";
+import { Home, Package } from "lucide-react";
+import { FaBiking, FaHistory, FaTasks, FaUsers } from "react-icons/fa";
+import { MdBikeScooter, MdTask } from "react-icons/md";
 import React from "react";
-import { NavLink, Outlet } from "react-router";
+import { Link, NavLink, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 
@@ -14,14 +14,14 @@ const DashboardLayout = () => {
       {/* TOP NAVBAR */}
       <div className="navbar bg-base-100/70 backdrop-blur-md shadow-sm px-4 sticky top-0 z-50 rounded-b-xl">
         {/* LEFT — LOGO */}
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img
             src="/logo.png"
             alt="logo"
             className="w-10 h-10 object-contain"
           />
           <span className="font-bold text-xl md:text-2xl">ZapShift</span>
-        </div>
+        </Link>
 
         {/* RIGHT — USER PROFILE */}
         <div className="ml-auto flex items-center gap-3">
@@ -81,28 +81,16 @@ const DashboardLayout = () => {
 
             <ul className="menu w-full grow">
               <p className=" text-md mt-5 font-bold">Menu</p>
-              {/* Home */}
+             {/* MyParcels */}
               <li>
                 <NavLink
-                  to="/"
+                  to="/dashboard/dashboard-home"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Homepage"
+                  data-tip="Dashboard"
                 >
                   {/* Home icon */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                    strokeWidth="2"
-                    fill="none"
-                    stroke="currentColor"
-                    className="my-1.5 inline-block size-4"
-                  >
-                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
-                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  </svg>
-                  <span className="is-drawer-close:hidden">Homepage</span>
+                  <Home className="w-4 h-4" />
+                  <span className="is-drawer-close:hidden">Dashboard</span>
                 </NavLink>
               </li>
               {/* MyParcels */}
@@ -131,6 +119,40 @@ const DashboardLayout = () => {
                   </span>
                 </NavLink>
               </li>
+              {/* ---------------Rider Only --------------------- */}
+              {role === "rider" && (
+                <>
+                  {/* AssignedParcels */}
+                  <li>
+                    <NavLink
+                      to="/dashboard/assigned-parcels"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assigned Parcels"
+                    >
+                      {/* Home icon */}
+                      <FaTasks className="w-4 h-4" />
+                      <span className="is-drawer-close:hidden">
+                        Assigned Parcels
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="/dashboard/completed-deliveries"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Completed Deliveries"
+                    >
+                      {/* Home icon */}
+                      <MdTask className="w-4 h-4" />
+                      <span className="is-drawer-close:hidden">
+                        Completed Deliveries
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
+
+              {/* ---------------Admin Only --------------------- */}
               {role === "admin" && (
                 <>
                   {/* RiderApproval */}

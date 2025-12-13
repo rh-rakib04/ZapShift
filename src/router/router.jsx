@@ -21,6 +21,11 @@ import RiderApproval from "../pages/Dashboard/RiderApproval";
 import UserManagement from "../pages/Dashboard/UserManagement";
 import AdminRoute from "./AdminRoute";
 import AssignRiders from "../pages/Dashboard/AssignRiders";
+import AssignedParcels from "../pages/Dashboard/AssignedParcels";
+import RiderRoute from "./RiderRoute";
+import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries";
+import ParcelTrack from "../pages/ParcelTrack";
+import DashboardHome from "../pages/Dashboard/HomeDashboard/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "pricing",
         element: <Pricing />,
+      },
+      {
+        path: "parcel-track/:trackingId",
+        element: <ParcelTrack />,
       },
       {
         path: "send-parcel",
@@ -91,6 +100,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path:'dashboard-home',
+        element: <DashboardHome />,
+      },
+      {
         path: "my-parcels",
         element: <MyParcels />,
       },
@@ -99,14 +112,6 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <RiderApproval />
-          </AdminRoute>
-        ),
-      },
-      {
-        path: "assign-riders",
-        element: (
-          <AdminRoute>
-            <AssignRiders />
           </AdminRoute>
         ),
       },
@@ -125,6 +130,32 @@ const router = createBrowserRouter([
       {
         path: "payment-cancelled",
         element: <PaymentCancel />,
+      },
+      // Rider Routes
+      {
+        path: "assigned-parcels",
+        element: (
+          <RiderRoute>
+            <AssignedParcels />
+          </RiderRoute>
+        ),
+      },
+      {
+        path: "completed-deliveries",
+        element: (
+          <RiderRoute>
+            <CompletedDeliveries />
+          </RiderRoute>
+        ),
+      },
+      // Admin Routes
+      {
+        path: "assign-riders",
+        element: (
+          <AdminRoute>
+            <AssignRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: "user-management",

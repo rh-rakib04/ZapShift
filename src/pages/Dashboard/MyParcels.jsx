@@ -72,7 +72,7 @@ const MyParcels = () => {
                 <td>{parcel.parcelName}</td>
                 <td>{parcel.createdAt}</td>
                 <td>{parcel.deliveryStatus}</td>
-                <td>{parcel.trackingId}</td>
+                <Link to={`/parcel-track/${parcel.trackingId}`}>{parcel.trackingId}</Link>
                 <td>{parcel.parcelWeight}</td>
                 <td>{parcel.cost}Tk</td>
                 <td>

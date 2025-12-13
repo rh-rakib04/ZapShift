@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { getIdToken } from "firebase/auth";
 
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "https://zap-shift-server-orcin.vercel.app",
 });
 
 const useAxiosSecure = () => {

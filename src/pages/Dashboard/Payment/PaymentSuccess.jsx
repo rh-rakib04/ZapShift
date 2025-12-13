@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { CheckCircle } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -8,6 +8,8 @@ const PaymentSuccess = () => {
   const sessionId = searchParams.get("session_id");
 
   const axiosSecure = useAxiosSecure();
+  const hasCalled = useRef(false); // 🔥 Prevent double API call
+
   const [paymentInfo, setPaymentInfo] = useState({
     transactionId: "",
     trackingId: "",
@@ -15,20 +17,23 @@ const PaymentSuccess = () => {
   });
 
   useEffect(() => {
-    if (sessionId) {
-      axiosSecure
-        .patch(`/payment-success?session_id=${sessionId}`)
-        .then((res) => {
-          setPaymentInfo({
-            transactionId: res.data.transactionId,
-            trackingId: res.data.trackingId,
-            amount: res.data.amount,
-          });
-        })
-        .catch((err) => {
-          console.error("Payment success fetch failed:", err);
+    if (!sessionId) return;
+
+    if (hasCalled.current) return; // 🔥 Stops 2nd call from Strict Mode
+    hasCalled.current = true;
+
+    axiosSecure
+      .patch(`/payment-success?session_id=${sessionId}`)
+      .then((res) => {
+        setPaymentInfo({
+          transactionId: res.data.transactionId,
+          trackingId: res.data.trackingId,
+          amount: res.data.amount,
         });
-    }
+      })
+      .catch((err) => {
+        console.error("Payment success fetch failed:", err);
+      });
   }, [sessionId, axiosSecure]);
 
   return (
@@ -57,6 +62,7 @@ const PaymentSuccess = () => {
             <span className="font-semibold">Tracking ID:</span>{" "}
             {paymentInfo.trackingId || "Loading..."}
           </p>
+
           <p className="text-sm">
             <span className="font-semibold">Transaction ID:</span>{" "}
             {paymentInfo.transactionId || "Loading..."}
@@ -69,7 +75,10 @@ const PaymentSuccess = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <Link to="/track" className="btn btn-secondary w-full">
+          <Link
+            to={`/parcel-track/${paymentInfo.trackingId}`}
+            className="btn btn-secondary w-full"
+          >
             Track Parcel
           </Link>
 
