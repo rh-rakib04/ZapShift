@@ -1,207 +1,278 @@
 import { Home, Package } from "lucide-react";
-import { FaBiking, FaHistory, FaTasks, FaUsers } from "react-icons/fa";
+import {
+  FaBiking,
+  FaHistory,
+  FaTasks,
+  FaUsers,
+  FaSignOutAlt,
+  FaBars,
+  FaUser,
+  FaCog,
+} from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa6";
 import { MdBikeScooter, MdTask } from "react-icons/md";
-import React from "react";
-import { Link, NavLink, Outlet } from "react-router";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const { role } = useRole();
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const menuItems = [
+    {
+      name: "Dashboard",
+      path: "/dashboard/dashboard-home",
+      icon: Home,
+      roles: ["admin", "user", "rider"],
+    },
+    {
+      name: "My Parcels",
+      path: "/dashboard/my-parcels",
+      icon: Package,
+      roles: ["user"],
+    },
+    {
+      name: "Payment History",
+      path: "/dashboard/payment-history",
+      icon: FaHistory,
+      roles: ["user"],
+    },
+    {
+      name: "Assigned Parcels",
+      path: "/dashboard/assigned-parcels",
+      icon: FaTasks,
+      roles: ["rider"],
+    },
+    {
+      name: "Completed Deliveries",
+      path: "/dashboard/completed-deliveries",
+      icon: MdTask,
+      roles: ["rider"],
+    },
+    {
+      name: "Rider Approval",
+      path: "/dashboard/rider-approval",
+      icon: FaBiking,
+      roles: ["admin"],
+    },
+    {
+      name: "Assign Riders",
+      path: "/dashboard/assign-riders",
+      icon: MdBikeScooter,
+      roles: ["admin"],
+    },
+    {
+      name: "User Management",
+      path: "/dashboard/user-management",
+      icon: FaUsers,
+      roles: ["admin"],
+    },
+  ];
+
+  const filteredMenuItems = menuItems.filter((item) =>
+    item.roles.includes(role)
+  );
+
   return (
-    <div>
-      {/* TOP NAVBAR */}
-      <div className="navbar bg-base-100/70 backdrop-blur-md shadow-sm px-4 sticky top-0 z-50 rounded-b-xl">
-        {/* LEFT — LOGO */}
-        <Link to="/" className="flex items-center gap-2">
-          <img
-            src="/logo.png"
-            alt="logo"
-            className="w-10 h-10 object-contain"
-          />
-          <span className="font-bold text-xl md:text-2xl">ZapShift</span>
-        </Link>
+    <div className="min-h-screen bg-base-200">
+      {/* Top Navbar */}
+      <div className="navbar bg-secondary text-primary-content flex justify-between items-center shadow-lg sticky top-0 z-50">
+        {/* Left Section - Menu Toggle & Logo */}
+        <div >
+          <label
+            htmlFor="dashboard-drawer"
+            className="btn btn-ghost  lg:hidden"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <FaBars className="w-5 h-5" />
+          </label>
+          <Link
+            to="/"
+            className="flex items-center gap-2 ml-2 transition-opacity"
+          >
+            <img
+              src="/logo.png"
+              alt="logo"
+              className="w-10 h-10 object-contain"
+            />
+            <span className="font-bold text-xl md:text-2xl">ZapShift</span>
+          </Link>
+        </div>
 
-        {/* RIGHT — USER PROFILE */}
-        <div className="ml-auto flex items-center gap-3">
-          <div className="text-right hidden sm:block leading-tight">
-            <p className="font-semibold">{user?.name}</p>
-            <p className="text-xs opacity-60">{user?.role}</p>
-          </div>
+        {/* Right Section - Theme Toggle & User Dropdown */}
+        <div className="flex-none gap-2">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="btn btn-ghost btn-circle"
+            title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? (
+              <FaMoon className="w-5 h-5" />
+            ) : (
+              <FaSun className="w-5 h-5" />
+            )}
+          </button>
 
-          <div className="avatar">
-            <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src={user?.photoURL} alt={user?.name} />
+          {/* User Dropdown */}
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost flex items-center gap-2"
+            >
+              <div className="hidden sm:flex flex-col items-end">
+                <p className="font-semibold text-sm">{user?.name || "User"}</p>
+                <p className="text-xs opacity-80 capitalize">
+                  {role || "user"}
+                </p>
+              </div>
+              <div className="avatar">
+                <div className="w-10 rounded-full ring ring-primary-content ring-offset-2 ring-offset-primary">
+                  <img
+                    src={user?.photoURL || "/default-avatar.png"}
+                    alt={user?.name || "User"}
+                  />
+                </div>
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow-lg bg-base-100 rounded-box w-56 text-base-content"
+            >
+              {/* User Info Header */}
+              <li className="menu-title">
+                <div className="flex items-center gap-3 p-2">
+                  <div className="avatar">
+                    <div className="w-12 rounded-full ring ring-primary ring-offset-2 ring-offset-base-100">
+                      <img
+                        src={user?.photoURL || "/default-avatar.png"}
+                        alt={user?.name || "User"}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold">{user?.name || "User"}</p>
+                    <p className="text-xs opacity-70">{user?.email}</p>
+                    <p className="text-xs opacity-60 capitalize mt-1">
+                      {role || "user"}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div className="divider my-1"></div>
+              </li>
+              <li>
+                <Link to="/dashboard/dashboard-home">
+                  <Home className="w-4 h-4" />
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/">
+                  <FaUser className="w-4 h-4" />
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/dashboard-home">
+                  <FaCog className="w-4 h-4" />
+                  Settings
+                </Link>
+              </li>
+              <li>
+                <div className="divider my-1"></div>
+              </li>
+              <li>
+                <a onClick={handleLogout} className="text-error">
+                  <FaSignOutAlt className="w-4 h-4" />
+                  Logout
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div className="drawer lg:drawer-open">
-        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content">
-          <div></div>
-          {/* Navbar */}
-          <nav className="navbar w-full bg-base-300">
-            <label
-              htmlFor="my-drawer-4"
-              aria-label="open sidebar"
-              className="btn btn-square btn-ghost"
-            >
-              {/* Sidebar toggle icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2"
-                fill="none"
-                stroke="currentColor"
-                className="my-1.5 inline-block size-4"
-              >
-                <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
-                <path d="M9 4v16"></path>
-                <path d="M14 10l2 2l-2 2"></path>
-              </svg>
-            </label>
-            <div className="px-4">Dashboard</div>
-          </nav>
-          {/* Page content here */}
-          <Outlet />
-        </div>
 
-        <div className="drawer-side is-drawer-close:overflow-visible">
+      <div className="drawer lg:drawer-open">
+        <input
+          id="dashboard-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+          checked={sidebarOpen}
+          onChange={(e) => setSidebarOpen(e.target.checked)}
+        />
+        <div className="drawer-content">
+          <div className="p-4 md:p-6 lg:p-8">
+            <Outlet />
+          </div>
+        </div>
+        <div className="drawer-side">
           <label
-            htmlFor="my-drawer-4"
+            htmlFor="dashboard-drawer"
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="flex min-h-full flex-col items-start bg-base-200 is-drawer-close:w-14 is-drawer-open:w-64">
-            {/* Sidebar content here */}
-
-            <ul className="menu w-full grow">
-              <p className=" text-md mt-5 font-bold">Menu</p>
-             {/* MyParcels */}
-              <li>
-                <NavLink
-                  to="/dashboard/dashboard-home"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Dashboard"
-                >
-                  {/* Home icon */}
-                  <Home className="w-4 h-4" />
-                  <span className="is-drawer-close:hidden">Dashboard</span>
-                </NavLink>
-              </li>
-              {/* MyParcels */}
-              <li>
-                <NavLink
-                  to="/dashboard/my-parcels"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="MyParcel"
-                >
-                  {/* Home icon */}
-                  <Package className="w-4 h-4" />
-                  <span className="is-drawer-close:hidden">My Parcels</span>
-                </NavLink>
-              </li>
-              {/* Payment History */}
-              <li>
-                <NavLink
-                  to="/dashboard/payment-history"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Payment History"
-                >
-                  {/* Home icon */}
-                  <FaHistory className="w-4 h-4" />
-                  <span className="is-drawer-close:hidden">
-                    Payment History
-                  </span>
-                </NavLink>
-              </li>
-              {/* ---------------Rider Only --------------------- */}
-              {role === "rider" && (
-                <>
-                  {/* AssignedParcels */}
-                  <li>
+          <aside className="w-64 min-h-full bg-base-100 shadow-xl">
+            <div className="p-4 border-b border-base-300">
+              <h2 className="text-xl font-bold text-primary">Dashboard Menu</h2>
+            </div>
+            <ul className="menu p-4 w-full text-base-content">
+              {filteredMenuItems.map((item, index) => {
+                const IconComponent = item.icon;
+                return (
+                  <li key={index}>
                     <NavLink
-                      to="/dashboard/assigned-parcels"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Assigned Parcels"
+                      to={item.path}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "bg-secondary text-primary-content"
+                          : "hover:bg-base-200"
+                      }
+                      onClick={() => setSidebarOpen(false)}
                     >
-                      {/* Home icon */}
-                      <FaTasks className="w-4 h-4" />
-                      <span className="is-drawer-close:hidden">
-                        Assigned Parcels
-                      </span>
+                      <IconComponent className="w-5 h-5" />
+                      {item.name}
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink
-                      to="/dashboard/completed-deliveries"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Completed Deliveries"
-                    >
-                      {/* Home icon */}
-                      <MdTask className="w-4 h-4" />
-                      <span className="is-drawer-close:hidden">
-                        Completed Deliveries
-                      </span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
-
-              {/* ---------------Admin Only --------------------- */}
-              {role === "admin" && (
-                <>
-                  {/* RiderApproval */}
-                  <li>
-                    <NavLink
-                      to="/dashboard/rider-approval"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Rider Approval"
-                    >
-                      {/* Home icon */}
-                      <FaBiking className="w-4 h-4" />
-                      <span className="is-drawer-close:hidden">
-                        Rider Approval
-                      </span>
-                    </NavLink>
-                  </li>
-                  {/* AssignRiders */}
-                  <li>
-                    <NavLink
-                      to="/dashboard/assign-riders"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Assign Riders"
-                    >
-                      {/* Home icon */}
-                      <MdBikeScooter className="w-4 h-4" />
-
-                      <span className="is-drawer-close:hidden">
-                        Assign Riders
-                      </span>
-                    </NavLink>
-                  </li>
-                  {/* UserManagement */}
-                  <li>
-                    <NavLink
-                      to="/dashboard/user-management"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="User Management"
-                    >
-                      {/* Home icon */}
-                      <FaUsers className="w-4 h-4" />
-                      <span className="is-drawer-close:hidden">
-                        User Management
-                      </span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
+                );
+              })}
             </ul>
-          </div>
+            <div className="absolute bottom-0 w-full p-4 border-t border-base-300">
+              <button
+                onClick={handleLogout}
+                className="btn btn-error btn-outline w-full"
+              >
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </div>
+          </aside>
         </div>
       </div>
     </div>

@@ -239,7 +239,7 @@ const SendParcel = () => {
 
           <p className="text-xs mt-4 mb-4">* Pickup Time 4pm-7pm Approx.</p>
 
-          <button type="submit" className="btn btn-primary w-full md:w-auto">
+          <button type="submit" className="btn btn-primary w-full md:w-auto text-primary-content">
             Proceed to Confirm Booking
           </button>
         </form>

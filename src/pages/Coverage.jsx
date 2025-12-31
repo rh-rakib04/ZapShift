@@ -124,7 +124,7 @@ const Coverage = () => {
                     className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                     required
                   />
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary text-primary-content">
                     <FaSearch />
                     Search
                   </button>

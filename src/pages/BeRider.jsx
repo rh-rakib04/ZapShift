@@ -183,7 +183,7 @@ const BeRider = () => {
               </select>
 
               {/* Submit button */}
-              <button type="submit" className="btn btn-primary w-full">
+              <button type="submit" className="btn btn-primary w-full text-primary-content">
                 Submit
               </button>
             </form>
