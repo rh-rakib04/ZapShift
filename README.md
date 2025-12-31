@@ -125,44 +125,44 @@ firebase-admin
 jsonwebtoken
 
 ##🚀 How to Run the Project Locally
---
+
 1️⃣ Clone the Client Repository
-git clone https://github.com/your-username/zap-shift-client.git
+git clone https://github.com/rh-rakib04/ZapShift
 cd zap-shift-client
---
+
 2️⃣ Install Frontend Dependencies
 npm install
---
+
 3️⃣ Setup Frontend Environment Variables
---
+
 Create a .env file:
---
+
 VITE_FIREBASE_API_KEY=your_firebase_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
---
+
 4️⃣ Start Frontend
 npm run dev
---
+
 Backend Setup
 5️⃣ Clone the Server Repository
 git clone https://github.com/your-username/zap-shift-server.git
 cd zap-shift-server
---
+
 6️⃣ Install Backend Dependencies
 npm install
---
+
 7️⃣ Setup Backend Environment Variables
---
+
 Create a .env file:
 
 PORT=5000
 MONGODB_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
---
+
 8️⃣ Start Backend Server
 npm start
---
+
 ##🔮 Future Improvements
 
 Real-time GPS tracking
@@ -185,24 +185,3 @@ It is ideal for academic submissions, portfolio projects, and full-stack develop
 Rakibul Hossain Bhuiya
 Full-Stack Developer
 📧 rakibulhossainbhuiya04@gmail.com
-
-
-## 🚚 Delivery Workflow
-
-```mermaid
-flowchart TD
-    A[User Adds Parcel] -->|Unpaid| B[User Completes Payment]
-    B -->|Paid| C[Admin Assigns Rider]
-    C -->|Ready to Pickup| D[Rider Picks Up Parcel]
-    D -->|In Transit| E{Within City?}
-
-    E -- Yes --> F1[Rider Out for Delivery]
-    F1 -->|Ready for Delivery| G1[Parcel Delivered]
-    G1 -->|Delivered| H1[Process Completed]
-
-    E -- No --> F2[Parcel Sent to Warehouse]
-    F2 -->|Reached Warehouse| G2[Shipped to Destination District]
-    G2 -->|Shipped| H2[Rider Out for Delivery]
-    H2 -->|Ready for Delivery| I2[Parcel Delivered]
-    I2 -->|Delivered| J2[Process Completed]
----
