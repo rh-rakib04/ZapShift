@@ -1,8 +1,5 @@
 # 📦 Zap Shift – Parcel Management System
 
-🔗 **Live Project:** https://your-live-link.com  
-🔗 **Backend API:** https://your-backend-link.com  
-
 Zap Shift is a **full-stack parcel delivery and logistics management system** designed to manage parcel booking, pricing, rider assignment, warehouse routing, and real-time delivery tracking.  
 The system follows a **role-based workflow** for Users, Admins, and Riders to ensure secure, efficient, and transparent courier operations.
 
@@ -10,7 +7,7 @@ The system follows a **role-based workflow** for Users, Admins, and Riders to en
 
 ## 📸 Screenshot
 
-![Zap Shift Screenshot](/public/zapshift-ss.png)
+![Zap Shift Screenshot](/public/zap.png)
 
 ---
 
