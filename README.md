@@ -49,7 +49,7 @@ This project is suitable for **academic submission, system design practice, and 
 | Non-Document | Above 3kg | +৳40/kg | +৳40/kg + ৳40 extra |
 
 ---
-##🗂️ Core Features
+### 🗂️ Core Features
 
 🔄 Automated pricing & parcel tracking
 
@@ -63,8 +63,8 @@ This project is suitable for **academic submission, system design practice, and 
 
 🏢 Warehouse-based inter-district routing
 
-##🧑‍💻 Technologies Used
-Frontend
+### 🧑‍💻 Technologies Used
+## Frontend
 
 React.js
 
@@ -76,7 +76,7 @@ Tailwind CSS
 
 DaisyUI
 
-Backend
+## Backend
 
 Node.js
 
@@ -94,34 +94,7 @@ JWT Authorization
 
 REST API Architecture
 
-##📦 Dependencies Used
-Frontend
-
-react
-
-react-router-dom
-
-axios
-
-firebase
-
-tailwindcss
-
-Backend
-
-express
-
-mongodb
-
-cors
-
-dotenv
-
-firebase-admin
-
-jsonwebtoken
-
-##🚀 How to Run the Project Locally
+### 🚀 How to Run the Project Locally
 
 1️⃣ Clone the Client Repository
 git clone https://github.com/rh-rakib04/ZapShift
@@ -160,7 +133,7 @@ JWT_SECRET=your_jwt_secret
 8️⃣ Start Backend Server
 npm start
 
-##🔮 Future Improvements
+### 🔮 Future Improvements
 
 Real-time GPS tracking
 
@@ -172,12 +145,12 @@ Payment gateway integration
 
 Customer support & dispute handling
 
-##✅ Conclusion
+### ✅ Conclusion
 
 Zap Shift demonstrates real-world parcel delivery workflows, secure role-based access, pricing logic, and scalable system design.
 It is ideal for academic submissions, portfolio projects, and full-stack development evaluations.
 
-##👨‍💻 Author
+### 👨‍💻 Author
 
 Rakibul Hossain Bhuiya
 Full-Stack Developer
